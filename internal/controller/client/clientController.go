@@ -9,14 +9,15 @@ import (
 )
 
 func CreateClient(ctx context.Context, c *controller.Controller, input dto.ClientInput) (*dto.ClientResponse, error) {
-	client, err := serviceclient.CreateClient(ctx, c.Service, input)
+	client, pipefyCard, err := serviceclient.CreateClient(ctx, c.Service, input)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return &dto.ClientResponse{
-		Status:  client.Status,
-		Message: "Solicitação de investimento criada com sucesso",
+		Status:     client.Status,
+		Message:    "Solicitação de investimento criada com sucesso",
+		PipefyCard: pipefyCard,
 	}, nil
 }
