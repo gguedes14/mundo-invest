@@ -8,6 +8,7 @@ type ClientInput struct {
 }
 
 type ClientResponse struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
+	Status     string `json:"status"`
+	Message    string `json:"message"`
+	PipefyCard string `json:"pipefy_card"`
 }
