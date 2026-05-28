@@ -2,6 +2,7 @@ package domain
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -11,7 +12,7 @@ type Events struct {
 	EventId     string    `json:"event_id"`
 	CardId      string    `json:"card_id"`
 	ClientEmail string    `json:"cliente_email"`
-	ProcessedAt string    `json:"processed_at"`
+	TimeStamp   time.Time `json:"processed_at"`
 }
 
 func (Events) TableName() string {

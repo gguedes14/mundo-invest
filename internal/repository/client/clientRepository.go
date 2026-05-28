@@ -5,6 +5,7 @@ import (
 
 	"github.com/gguedes14/mundo-invest/internal/domain"
 	"github.com/gguedes14/mundo-invest/internal/repository"
+	"github.com/google/uuid"
 )
 
 func CreateClient(ctx context.Context, client *domain.Client, r *repository.Repository) error {
@@ -13,7 +14,7 @@ func CreateClient(ctx context.Context, client *domain.Client, r *repository.Repo
 	return result.Error
 }
 
-func FindClientByID(ctx context.Context, id string, r *repository.Repository) (*domain.Client, error) {
+func FindClientByID(ctx context.Context, id uuid.UUID, r *repository.Repository) (*domain.Client, error) {
 	var client domain.Client
 	result := r.Db.WithContext(ctx).Where("id = ?", id).First(&client)
 
@@ -24,13 +25,13 @@ func FindClientByID(ctx context.Context, id string, r *repository.Repository) (*
 	return &client, nil
 }
 
-func UpdateClientStatus(ctx context.Context, id string, status string, r *repository.Repository) error {
+func UpdateClientStatus(ctx context.Context, id uuid.UUID, status string, r *repository.Repository) error {
 	result := r.Db.WithContext(ctx).Model(&domain.Client{}).Where("id = ?", id).Update("status", status)
 
 	return result.Error
 }
 
-func UpdateClientPriority(ctx context.Context, id string, status string, r *repository.Repository) error {
+func UpdateClientPriority(ctx context.Context, id uuid.UUID, status string, r *repository.Repository) error {
 	result := r.Db.WithContext(ctx).Model(&domain.Client{}).Where("id = ?", id).Update("prioridade", status)
 
 	return result.Error

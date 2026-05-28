@@ -58,7 +58,7 @@ func TestRepository_FindClientByID(t *testing.T) {
 		t.Fatalf("erro inesperado: %v", err)
 	}
 
-	foundClient, err := FindClientByID(context.Background(), client.ID.String(), repo)
+	foundClient, err := FindClientByID(context.Background(), client.ID, repo)
 
 	if err != nil {
 		t.Fatalf("erro inesperado: %v", err)
@@ -79,7 +79,7 @@ func TestRepository_FindClientByID_NotFound(t *testing.T) {
 
 	repo := repository.NewClientRepository(db)
 
-	_, err = FindClientByID(context.Background(), uuid.New().String(), repo)
+	_, err = FindClientByID(context.Background(), uuid.New(), repo)
 
 	if err == nil {
 		t.Fatal("esperava um erro, mas obteve nil")
@@ -108,7 +108,7 @@ func TestRepository_UpdateClientStatus(t *testing.T) {
 		t.Fatalf("erro inesperado: %v", err)
 	}
 
-	err = UpdateClientStatus(context.Background(), client.ID.String(), "inativo", repo)
+	err = UpdateClientStatus(context.Background(), client.ID, "inativo", repo)
 
 	if err != nil {
 		t.Fatalf("erro inesperado: %v", err)
@@ -148,7 +148,7 @@ func TestRepository_UpdateClientPriority(t *testing.T) {
 		t.Fatalf("erro inesperado: %v", err)
 	}
 
-	err = UpdateClientPriority(context.Background(), client.ID.String(), "alta", repo)
+	err = UpdateClientPriority(context.Background(), client.ID, "alta", repo)
 
 	if err != nil {
 		t.Fatalf("erro inesperado: %v", err)

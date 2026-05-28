@@ -26,4 +26,5 @@ func (Client) TableName() string {
 
 type ClientDomain interface {
 	CreateClient(ctx context.Context, client *Client) error
+	FindClientByID(ctx context.Context, id uuid.UUID) (*Client, error)
 }
