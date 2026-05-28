@@ -14,7 +14,7 @@ type Client struct {
 	TipoSolicitacao string    `json:"tipo_solicitacao"`
 	ValorPatrimonio float64   `json:"valor_patrimonio"`
 	Status          string    `json:"status"`
-	Prioridade      *string   `json:"prioridade"`
+	Prioridade      string    `json:"prioridade"`
 	PipefyCardID    *string   `json:"pipefyCardId"`
 	CreatedAt       time.Time `json:"createdAt"`
 	UpdatedAt       time.Time `json:"updatedAt"`
