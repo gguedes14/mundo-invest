@@ -3,5 +3,5 @@ CREATE TABLE events (
     event_id VARCHAR(255) UNIQUE NOT NULL,
     card_id VARCHAR(255) NOT NULL,
     cliente_email VARCHAR(255) NOT NULL,
-    processed_at TIMESTAMP NOT NULL DEFAULT NOW()
+    processed_at TIMESTAMP NOT NULL,
 );

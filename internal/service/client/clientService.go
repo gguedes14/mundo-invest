@@ -65,3 +65,13 @@ func CreatePipefyCard(client *domain.Client) string {
 		client.ValorPatrimonio,
 	)
 }
+
+func FindClientByID(ctx context.Context, id uuid.UUID, s *service.Service) (*domain.Client, error) {
+	client, err := repositoryclient.FindClientByID(ctx, id, s.Repo)
+
+	if err != nil {
+		return nil, fmt.Errorf("error finding client: %w", err)
+	}
+
+	return client, nil
+}

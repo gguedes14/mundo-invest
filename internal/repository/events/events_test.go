@@ -3,6 +3,7 @@ package events
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/gguedes14/mundo-invest/internal/domain"
 	"github.com/gguedes14/mundo-invest/internal/repository"
@@ -26,7 +27,7 @@ func TestCreateEvent(t *testing.T) {
 		EventId:     "event123",
 		CardId:      "card123",
 		ClientEmail: "email@email.com",
-		ProcessedAt: "2024-06-01T12:00:00Z",
+		TimeStamp:   time.Now(),
 	}
 	err = repo.Db.WithContext(context.Background()).Create(event).Error
 
@@ -54,7 +55,7 @@ func TestFindEventByID(t *testing.T) {
 		EventId:     "event123",
 		CardId:      "card123",
 		ClientEmail: "email@email.com",
-		ProcessedAt: "2024-06-01T12:00:00Z",
+		TimeStamp:   time.Now(),
 	}
 	err = repo.Db.WithContext(context.Background()).Create(event).Error
 
