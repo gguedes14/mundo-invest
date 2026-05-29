@@ -14,9 +14,9 @@ func CreateClient(ctx context.Context, client *domain.Client, r *repository.Repo
 	return result.Error
 }
 
-func FindClientByID(ctx context.Context, id uuid.UUID, r *repository.Repository) (*domain.Client, error) {
+func FindClientByEmail(ctx context.Context, email string, r *repository.Repository) (*domain.Client, error) {
 	var client domain.Client
-	result := r.Db.WithContext(ctx).Where("id = ?", id).First(&client)
+	result := r.Db.WithContext(ctx).Where("cliente_email = ?", email).First(&client)
 
 	if result.Error != nil {
 		return nil, result.Error

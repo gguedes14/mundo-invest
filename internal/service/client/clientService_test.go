@@ -124,3 +124,33 @@ func TestCreateClient_NomeRequired(t *testing.T) {
 		t.Fatal("card deve ser vazio para nome ausente")
 	}
 }
+
+func TestCreateClient_DuplicateEmail(t *testing.T) {
+	s := &service.Service{
+		Repo: setupTestDB(t),
+	}
+
+	input := dto.ClientInput{
+		ClienteNome:     "Gabriel",
+		ClienteEmail:    "email@email.com",
+		TipoSolicitacao: "investimento",
+		ValorPatrimonio: 100000,
+	}
+
+	_, _, err := CreateClient(context.Background(), s, input)
+	if err != nil {
+		t.Fatalf("não esperava erro na primeira criação: %v", err)
+	}
+
+	client, card, err := CreateClient(context.Background(), s, input)
+
+	if err == nil {
+		t.Fatal("esperava erro para email duplicado")
+	}
+	if client != nil {
+		t.Fatal("client deve ser nil para email duplicado")
+	}
+	if card != "" {
+		t.Fatal("card deve ser vazio para email duplicado")
+	}
+}

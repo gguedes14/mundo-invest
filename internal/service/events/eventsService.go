@@ -11,6 +11,12 @@ import (
 	repositoryClients "github.com/gguedes14/mundo-invest/internal/repository/client"
 	repositoryevents "github.com/gguedes14/mundo-invest/internal/repository/events"
 	"github.com/gguedes14/mundo-invest/internal/service"
+	"github.com/google/uuid"
+)
+
+const (
+	PrioridadeAlta   = "prioridade_alta"
+	PrioridadeNormal = "prioridade_normal"
 )
 
 func FindEventByID(ctx context.Context, id string, s *service.Service) (*domain.Events, error) {
@@ -23,12 +29,17 @@ func FindEventByID(ctx context.Context, id string, s *service.Service) (*domain.
 	return event, nil
 }
 
-func CreateEvent(ctx context.Context, s *service.Service, input dto.EventInput, clientId dto.ClientResponse) (*domain.Events, string, error) {
+func CreateEvent(ctx context.Context, s *service.Service, input dto.EventInput) (*domain.Events, string, error) {
 	event := &domain.Events{
-		EventId:     input.EventId,
-		CardId:      input.CardId,
-		ClientEmail: input.ClientEmail,
-		TimeStamp:   input.Timestamp,
+		ID:           uuid.New(),
+		EventId:      input.EventId,
+		CardId:       input.CardId,
+		ClienteEmail: input.ClienteEmail,
+		TimeStamp:    input.Timestamp,
+	}
+
+	if event.EventId == "" || event.CardId == "" || event.ClienteEmail == "" {
+		return nil, "", errors.New("missing required fields")
 	}
 
 	FindEvents, err := repositoryevents.FindEventByID(
@@ -41,9 +52,9 @@ func CreateEvent(ctx context.Context, s *service.Service, input dto.EventInput, 
 		return nil, "", errors.New("event already exists")
 	}
 
-	client, err := repositoryClients.FindClientByID(
+	client, err := repositoryClients.FindClientByEmail(
 		ctx,
-		clientId.ID,
+		input.ClienteEmail,
 		s.Repo,
 	)
 
@@ -51,10 +62,10 @@ func CreateEvent(ctx context.Context, s *service.Service, input dto.EventInput, 
 		return nil, "", fmt.Errorf("error finding client: %w", err)
 	}
 
-	prioridade := "prioridade_normal"
+	prioridade := PrioridadeNormal
 
 	if client.ValorPatrimonio >= 200000 {
-		prioridade = "prioridade_alta"
+		prioridade = PrioridadeAlta
 	}
 
 	client.Prioridade = prioridade
@@ -86,16 +97,16 @@ func CreateEvent(ctx context.Context, s *service.Service, input dto.EventInput, 
 		return nil, "", fmt.Errorf("error updating client priority: %w", err)
 	}
 
-	pipefyMutation := updatePipefyFieldCard(event)
+	pipefyMutation := updatePipefyFieldCard(event, prioridade)
 
 	return event, pipefyMutation, nil
 }
 
-func updatePipefyFieldCard(event *domain.Events) string {
+func updatePipefyFieldCard(event *domain.Events, prioridade string) string {
 	return fmt.Sprintf(
 		pipefy.UpdateCardFieldMutation,
 		event.CardId,
-		event.ClientEmail,
-		event.TimeStamp,
+		"prioridade",
+		prioridade,
 	)
 }

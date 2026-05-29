@@ -34,13 +34,13 @@ const UpdateCardFieldMutation = `
 mutation {
 	updateCardField(
 		input: {
-		card_id: %s,
-		field_id: %s,
-		new_value: "%s"
-	}) {
+			card_id: "%s",
+			field_id: "%s",
+			new_value: "%s"
+		}
+	) {
 		card {
-		id,
-		title
+			title
 		}
 	}
 }

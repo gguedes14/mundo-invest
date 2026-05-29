@@ -36,6 +36,12 @@ func CreateClient(ctx context.Context, s *service.Service, input dto.ClientInput
 		return nil, "", errors.New("invalid email format")
 	}
 
+	existingClient, err := repositoryclient.FindClientByEmail(ctx, input.ClienteEmail, s.Repo)
+
+	if err == nil && existingClient != nil {
+		return nil, "", errors.New("client already exists")
+	}
+
 	client := &domain.Client{
 		ID:              uuid.New(),
 		ClienteNome:     input.ClienteNome,
@@ -66,11 +72,10 @@ func CreatePipefyCard(client *domain.Client) string {
 	)
 }
 
-func FindClientByID(ctx context.Context, id uuid.UUID, s *service.Service) (*domain.Client, error) {
-	client, err := repositoryclient.FindClientByID(ctx, id, s.Repo)
-
+func FindClientByEmail(ctx context.Context, s *service.Service, email string) (*domain.Client, error) {
+	client, err := repositoryclient.FindClientByEmail(ctx, email, s.Repo)
 	if err != nil {
-		return nil, fmt.Errorf("error finding client: %w", err)
+		return nil, fmt.Errorf("error finding client by email: %w", err)
 	}
 
 	return client, nil
