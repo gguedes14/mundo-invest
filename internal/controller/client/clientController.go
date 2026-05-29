@@ -30,7 +30,6 @@ func FindClientByEmail(ctx context.Context, c *controller.Controller, email stri
 	}
 
 	return &dto.ClientResponse{
-		ID:      client.ID,
 		Status:  client.Status,
 		Message: "Cliente encontrado com sucesso",
 	}, nil

@@ -1,7 +1,5 @@
 package dto
 
-import "github.com/google/uuid"
-
 type ClientInput struct {
 	ClienteNome     string  `json:"cliente_nome"`
 	ClienteEmail    string  `json:"cliente_email"`
@@ -10,8 +8,7 @@ type ClientInput struct {
 }
 
 type ClientResponse struct {
-	ID         uuid.UUID `json:"id"`
-	Status     string    `json:"status"`
-	Message    string    `json:"message"`
-	PipefyCard string    `json:"pipefy_card"`
+	Status     string `json:"status"`
+	Message    string `json:"message"`
+	PipefyCard string `json:"pipefy_card"`
 }

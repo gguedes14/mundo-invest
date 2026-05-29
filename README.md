@@ -4,6 +4,21 @@ API desenvolvida em Go para gerenciamento de clientes e processamento de eventos
 
 ---
 
+# Visão de produção (AWS)
+
+Em produção, essa API poderia escalar na AWS utilizando serviços serverless e gerenciados.
+
+O `API Gateway` seria responsável por expor os endpoints HTTP e encaminhar as requisições para funções `AWS Lambda`, responsáveis pela criação de clientes e processamento dos webhooks do Pipefy.
+
+O banco de dados poderia utilizar `Amazon RDS PostgreSQL` para persistência relacional, com backups automáticos e alta disponibilidade. Em cenários de alto volume de eventos, também seria possível utilizar `DynamoDB` para armazenar os webhooks e garantir idempotência através do `event_id`.
+
+Para desacoplar o processamento dos webhooks, o fluxo poderia utilizar `Amazon SQS`, permitindo processamento assíncrono, maior resiliência e reprocessamento em caso de falhas.
+
+A observabilidade poderia ser feita com `CloudWatch Logs` e `CloudWatch Metrics`, enquanto credenciais e segredos seriam armazenados no `AWS Secrets Manager`.
+
+Essa arquitetura permite escalabilidade automática, alta disponibilidade e melhor tolerância a falhas.
+---
+
 ## Tecnologias utilizadas
 
 - Go 1.24.0
