@@ -27,6 +27,7 @@ func main() {
 	router := chi.NewRouter()
 
 	routes.ClientRoutes(router, h)
+	routes.EventRoutes(router, h)
 
 	log.Println("🚀 Server running on :3000")
 

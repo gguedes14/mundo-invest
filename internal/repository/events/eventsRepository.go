@@ -15,7 +15,7 @@ func CreateEvent(ctx context.Context, event *domain.Events, r *repository.Reposi
 
 func FindEventByID(ctx context.Context, id string, r *repository.Repository) (*domain.Events, error) {
 	var event domain.Events
-	result := r.Db.WithContext(ctx).Where("id = ?", id).First(&event)
+	result := r.Db.WithContext(ctx).Where("event_id = ?", id).First(&event)
 
 	if result.Error != nil {
 		return nil, result.Error

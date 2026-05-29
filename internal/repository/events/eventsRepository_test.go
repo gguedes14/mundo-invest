@@ -23,11 +23,11 @@ func TestCreateEvent(t *testing.T) {
 	repo := repository.NewClientRepository(db)
 
 	event := &domain.Events{
-		ID:          uuid.New(),
-		EventId:     "event123",
-		CardId:      "card123",
-		ClientEmail: "email@email.com",
-		TimeStamp:   time.Now(),
+		ID:           uuid.New(),
+		EventId:      "event123",
+		CardId:       "card123",
+		ClienteEmail: "email@email.com",
+		TimeStamp:    time.Now(),
 	}
 	err = repo.Db.WithContext(context.Background()).Create(event).Error
 
@@ -51,11 +51,11 @@ func TestFindEventByID(t *testing.T) {
 	repo := repository.NewClientRepository(db)
 
 	event := &domain.Events{
-		ID:          uuid.New(),
-		EventId:     "event123",
-		CardId:      "card123",
-		ClientEmail: "email@email.com",
-		TimeStamp:   time.Now(),
+		ID:           uuid.New(),
+		EventId:      "event123",
+		CardId:       "card123",
+		ClienteEmail: "email@email.com",
+		TimeStamp:    time.Now(),
 	}
 	err = repo.Db.WithContext(context.Background()).Create(event).Error
 

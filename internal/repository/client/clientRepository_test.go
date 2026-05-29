@@ -37,7 +37,7 @@ func TestRepository_CreateClient(t *testing.T) {
 	}
 }
 
-func TestRepository_FindClientByID(t *testing.T) {
+func TestRepository_FindClientByEmail(t *testing.T) {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	if err != nil {
 		t.Fatal(err)
@@ -58,18 +58,18 @@ func TestRepository_FindClientByID(t *testing.T) {
 		t.Fatalf("erro inesperado: %v", err)
 	}
 
-	foundClient, err := FindClientByID(context.Background(), client.ID, repo)
+	foundClient, err := FindClientByEmail(context.Background(), "email@email.com", repo)
 
 	if err != nil {
 		t.Fatalf("erro inesperado: %v", err)
 	}
 
 	if foundClient.ID != client.ID {
-		t.Fatalf("IDs não coincidem: esperado %v, obtido %v", client.ID, foundClient.ID)
+		t.Fatalf("ID do cliente encontrado não corresponde ao ID do cliente criado: esperado %s, obtido %s", client.ID, foundClient.ID)
 	}
 }
 
-func TestRepository_FindClientByID_NotFound(t *testing.T) {
+func TestRepository_FindClientByEmail_NotFound(t *testing.T) {
 	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	if err != nil {
 		t.Fatal(err)
@@ -78,8 +78,7 @@ func TestRepository_FindClientByID_NotFound(t *testing.T) {
 	db.AutoMigrate(&domain.Client{})
 
 	repo := repository.NewClientRepository(db)
-
-	_, err = FindClientByID(context.Background(), uuid.New(), repo)
+	_, err = FindClientByEmail(context.Background(), "", repo)
 
 	if err == nil {
 		t.Fatal("esperava um erro, mas obteve nil")

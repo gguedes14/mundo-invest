@@ -11,14 +11,13 @@ import (
 
 func CrateEvent(w http.ResponseWriter, r *http.Request, h *handler.Handler) {
 	var input dto.EventInput
-	var clientID dto.ClientResponse
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(map[string]string{"error": "invalid input"})
 		return
 	}
 
-	response, err := controllerEvent.CreateEvent(r.Context(), h.Controller, input, clientID)
+	response, err := controllerEvent.CreateEvent(r.Context(), h.Controller, input)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(map[string]string{"error": err.Error()})

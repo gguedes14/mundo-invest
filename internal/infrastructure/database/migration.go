@@ -20,8 +20,17 @@ type Client struct {
 	UpdatedAt       time.Time
 }
 
+type Events struct {
+	ID           uuid.UUID `gorm:"type:uuid;primaryKey"`
+	EventId      string    `gorm:"uniqueIndex;not null"`
+	CardId       string    `gorm:"not null"`
+	ClienteEmail string    `gorm:"not null"`
+	TimeStamp    time.Time `gorm:"not null"`
+}
+
 func RunMigrations(db *gorm.DB) error {
 	return db.AutoMigrate(
 		&Client{},
+		&Events{},
 	)
 }

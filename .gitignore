@@ -24,6 +24,3 @@ vendor/
 
 # Env
 .env
-
-# mocks
-mocks/
