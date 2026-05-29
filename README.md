@@ -17,6 +17,7 @@ Para desacoplar o processamento dos webhooks, o fluxo poderia utilizar `Amazon S
 A observabilidade poderia ser feita com `CloudWatch Logs` e `CloudWatch Metrics`, enquanto credenciais e segredos seriam armazenados no `AWS Secrets Manager`.
 
 Essa arquitetura permite escalabilidade automática, alta disponibilidade e melhor tolerância a falhas.
+
 ---
 
 ## Tecnologias utilizadas
